@@ -10,11 +10,10 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
 
-#include <iostream>
-#include <string>
-#include <chrono>
+struct RenderWindow;
+struct Texture;
 
-class RenderWindow {
+struct RenderWindow {
 private:
 	inline static const int width = 800;
 	inline static const int height = 800;
@@ -22,7 +21,9 @@ private:
 public:
 	inline static SDL_Window* window = NULL;
 	inline static SDL_Renderer* renderer = NULL;
-
+	inline static auto nextFrame = std::chrono::steady_clock::now();
+	inline static const int frameRate = 60;
+public:
 	inline static bool Start()
 	{
 		if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -43,82 +44,25 @@ public:
 		SDL_DestroyWindow(window);
 		SDL_Quit();
 	}
-};
-
-		if (SDL_Init(SDL_INIT_VIDEO) < 0) throw std::exception(SDL_GetError());
-
-		//Create Window
-		// char* title, posX, posY, sizeX, sizeY, SDL_Flags
-		//throw error if fail
-
-		_window = SDL_CreateWindow(__title.c_str(),
-			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-			1920 / 2, 1080 / 2, SDL_WINDOW_SHOWN);
-		if (_window == NULL) throw std::exception(SDL_GetError());
-
-		//Get window surface (might be useful)
-
-
-		//create renderer
-		//throw error if fail
-
-		_renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED);// | SDL_RENDERER_PRESENTVSYNC);
-		if (_renderer == NULL) throw std::exception(SDL_GetError());
-
-		//set window icon
-		if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) throw std::exception(IMG_GetError());
-
-		if (TTF_Init() == -1) throw std::exception(TTF_GetError());
-
-		SDL_SetWindowIcon(_window, IMG_Load("circles.png"));
-
-		SDL_CaptureMouse(SDL_bool(true));
-
-		_nextFrame = std::chrono::steady_clock::now();
-
-		return;
-	}
-
-	inline static void Close()
+	inline static bool Update()
 	{
-		SDL_DestroyRenderer(_renderer);
-		SDL_DestroyWindow(_window);
-		SDL_Quit();
-		return;
-	}
-
-bool update()
-	{
-	//get next frame time
-
-			case SDL_MOUSEBUTTONUP:
-				//Mouse::_released[e.button.button - 1] = true;
-				break;
-
-			case SDL_MOUSEWHEEL:
-				//Mouse::_scroll = e.wheel.y;
-
-			default:
-				break;
-			}
-
-			if (e.type == SDL_KEYUP)
-			{
-				if (e.key.keysym.sym == SDLK_ESCAPE)
-				{
-					return false;
-				}
-			}
-			else if (e.type == SDL_QUIT) {
-				return false;
-			}
-		}
-
+		nextFrame += std::chrono::microseconds(1000000 / frameRate);
+		if (std::chrono::steady_clock::now() > nextFrame)nextFrame = std::chrono::steady_clock::now();
+		SDL_Delay(static_cast<Uint32>((nextFrame - std::chrono::steady_clock::now()).count() / 1000000));
 
 		Draw();
-		SDL_Delay(static_cast<Uint32>((_nextFrame - std::chrono::steady_clock::now()).count() / 1000000));
 		return true;
 	}
+	inline static void Draw() {}
+};
+struct Texture {
+	SDL_Texture* texture = NULL;
+	SDL_Rect clip = { 0,0,0,0 };
+	Texture() = default;
+	~Texture() { SDL_DestroyTexture(texture); }
+};
+
+
 
 int main(int argc, char* args[])
 	{
