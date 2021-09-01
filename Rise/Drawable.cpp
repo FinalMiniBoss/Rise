@@ -22,8 +22,12 @@ Drawable::~Drawable()
 	SDL_DestroyTexture(texture);
 }
 
+bool sortChildren(Entity* l1, Entity* l2) {
+	return l1->UUID > l2->UUID;
+}
 void Drawable::Draw()
 {
+	std::sort(children.begin(), children.end(), sortChildren);
 	const SDL_Rect* r = new SDL_Rect(globalRect());
 	SDL_RenderCopy(RenderWindow::renderer, texture, NULL, r);
 	delete r;

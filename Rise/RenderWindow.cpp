@@ -52,10 +52,12 @@ bool RenderWindow::Update()
 		if (e.type == SDL_QUIT)return false;
 	}
 
+	scene->update();
+
 	nextFrame += std::chrono::microseconds(1000000 / frameRate);
 	if (std::chrono::steady_clock::now() > nextFrame)nextFrame = std::chrono::steady_clock::now();
 	SDL_Delay(static_cast<Uint32>((nextFrame - std::chrono::steady_clock::now()).count() / 1000000));
-	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+	SDL_SetRenderDrawColor(renderer, 0xab, 0xcd, 0xef, 0xff);
 	SDL_RenderClear(renderer);
 	Draw();
 	SDL_RenderPresent(renderer);

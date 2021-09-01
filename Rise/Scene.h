@@ -14,11 +14,12 @@ public:
 		GameOver,
 		Restart
 	} state = State::Start;
-
+	float speed = 0.0005f;
 	Player* player = nullptr;
-	Water* water = nullptr;
-	std::queue<Platform*> platforms = {};
+	std::vector<Water*> water = {};
+	int platformTimer = 0;
 
 	Scene();
 	~Scene();
+	void onUpdate();
 };
