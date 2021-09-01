@@ -10,6 +10,11 @@
 
 class Entity;
 
+//template<class GT>
+//GT clamp(&GT x, GT min, GT max) {
+//	x = std::min(std::max(x, min), max);
+//}
+
 template<class T>
 class Point {
 public:
@@ -20,7 +25,15 @@ public:
 class Drawable : public Entity
 {
 public:
-	bool visible = true;
+	float alpha = 1.0f;
+	inline float globalAlpha() {
+		return alpha * (dynamic_cast<Drawable*>(parent) ? dynamic_cast<Drawable*>(parent)->globalAlpha() : 1.f);
+	}
+
+	float angle = 0;
+	Point<float>* rotationPoint = nullptr;
+	bool Flip = false;
+
 	Point<float> position = { 0,0 };
 	Point<float> size = { 0,0 };
 	Point<float> scale = { 1.f,1.f };

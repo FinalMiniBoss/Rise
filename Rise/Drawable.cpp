@@ -20,6 +20,7 @@ Drawable::~Drawable()
 
 {
 	SDL_DestroyTexture(texture);
+	delete rotationPoint;
 }
 
 bool sortChildren(Entity* l1, Entity* l2) {
@@ -29,12 +30,23 @@ void Drawable::Draw()
 {
 	std::sort(children.begin(), children.end(), sortChildren);
 	const SDL_Rect* r = new SDL_Rect(globalRect());
-	SDL_RenderCopy(RenderWindow::renderer, texture, NULL, r);
+	SDL_SetTextureAlphaMod(texture, static_cast<Uint8>(0xff * globalAlpha()));
+	const SDL_Point* pp = (rotationPoint ? new SDL_Point({ (globalRect().x) + (int)(globalRect().w * rotationPoint->x), globalRect().y + (int)(globalRect().h * rotationPoint->y) }) : NULL);
+	SDL_RenderCopyEx(
+		RenderWindow::renderer,
+		texture,
+		NULL,
+		r,
+		angle,
+		pp,
+		Flip ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
 	delete r;
+	delete pp;
 	for (auto& child : children)
 	{
 		dynamic_cast<Drawable*>(child)->Draw();
 	}
+	
 }
 
 void Drawable::onUpdate()

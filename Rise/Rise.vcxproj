@@ -83,6 +83,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\bin\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\bin\</IntDir>
+    <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -145,10 +148,15 @@
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\Dev\SDL2_image-2.0.5\lib\x64;C:\Dev\SDL2_mixer-2.0.4\lib\x64;C:\Dev\SDL2_ttf-2.0.15\lib\x64;C:\Dev\SDL2-2.0.16\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Message>copy files</Message>
+      <Command>xcopy /E /Y "$(SolutionDir)Rise\assets" "$(SolutionDir)$(Platform)\$(Configuration)\bin\assets'</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Drawable.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="FuelGuage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -159,12 +167,24 @@
   <ItemGroup>
     <ClInclude Include="Drawable.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="FuelGuage.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RenderWindow.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Water.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\x64\Release\bin\assets\Rise.ico" />
+    <Image Include="assets\Rise.ico">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Rise.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

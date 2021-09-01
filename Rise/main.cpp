@@ -5,7 +5,7 @@ int main(int argc, char* args[])
 
 	//test window
 	RenderWindow::Start();
-
+	SDL_SetWindowIcon(RenderWindow::window, IMG_Load("assets/Player.png"));
 	Scene* Game = new Scene;
 	RenderWindow::scene = Game;
 	while (RenderWindow::Update());
