@@ -4,6 +4,12 @@ Scene::Scene()
 {
 	Water::WaterTexture = SDL_CreateTextureFromSurface(RenderWindow::renderer, IMG_Load("assets/Wave.png"));
 	Platform::PlatformTexture = SDL_CreateTextureFromSurface(RenderWindow::renderer, IMG_Load("assets/Platform.png"));
+	PowerUp::SpeedTexture = SDL_CreateTextureFromSurface(RenderWindow::renderer, IMG_Load("assets/SpeedPowerUp.png"));
+	PowerUp::FuelTexture = SDL_CreateTextureFromSurface(RenderWindow::renderer, IMG_Load("assets/FuelPowerUp.png"));
+	PowerUp::InstantFuelTexture = SDL_CreateTextureFromSurface(RenderWindow::renderer, IMG_Load("assets/InstantFuelPowerUp.png"));
+	PowerUp::RefuelTexture = SDL_CreateTextureFromSurface(RenderWindow::renderer, IMG_Load("assets/RefuelPowerUp.png"));
+	PowerUp::ThrustTexture = SDL_CreateTextureFromSurface(RenderWindow::renderer, IMG_Load("assets/ThrustPowerUp.png"));
+
 	size = { RenderWindow::width,RenderWindow::height };
 
 	state = State::Title;
@@ -46,6 +52,7 @@ Scene::Scene()
 
 	player = new Player;
 	addChild(player);
+	addChild(player->Thrust);
 
 	Platform* p1 = new Platform;
 	p1->scale = { 10.f,1.f };
@@ -62,9 +69,10 @@ Scene::~Scene()
 }
 
 void Scene::onUpdate() {
+	player->Thrust->position = player->position;
 	ticker++;
-	Title->position.x += 0.00025f * std::cosf(ticker/2.f * .01f);
-	Title->position.y -= 0.0005f * std::sinf(ticker/2.f * 0.03f);
+	Title->position.x += 0.00008f * std::cosf(ticker/2.f * .01f);
+	Title->position.y -= 0.00025f * std::sinf(ticker/2.f * 0.03f);
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
 	if (state == State::Title && keys[SDL_SCANCODE_SPACE]) state = State::Play;
 	if (RenderWindow::KeyStates[RenderWindow::Key::Esc]==RenderWindow::KeyState::Pressed) {
@@ -86,12 +94,20 @@ void Scene::onUpdate() {
 				p->scale = { 10.f,1.f };
 				p->position.x = 0.5f;
 			}
+			else {
+				if (rand() % (int)powerUpFrequency == 0) {
+					PowerUp* powerup = new PowerUp;
+					powerUpFrequency += 0.5f;
+					powerup->position = p->position;
+					addChild(powerup);
+				}
+			}
 			addChild(p);
 		}
 		for (size_t i = 0; i < children.size(); i++)
 		{
-			if (dynamic_cast<Platform*>(children[i])) {
-				if (dynamic_cast<Platform*>(children[i])->globalRect().y > RenderWindow::height) {
+			if (dynamic_cast<Platform*>(children[i]) || dynamic_cast<PowerUp*>(children[i])) {
+				if (dynamic_cast<Drawable*>(children[i])->globalRect().y > RenderWindow::height) {
 					Entity* c = children[i];
 					removeChild(children[i]);
 					delete c;
@@ -101,7 +117,7 @@ void Scene::onUpdate() {
 
 		for (auto c : children)
 		{
-			if (dynamic_cast<Platform*>(c) || dynamic_cast<Player*>(c))
+			if (dynamic_cast<Platform*>(c) || dynamic_cast<Player*>(c) || dynamic_cast<PowerUp*>(c))
 			{
 				dynamic_cast<Drawable*>(c)->position.y += speed;
 			}
@@ -116,4 +132,6 @@ void Scene::onUpdate() {
 				}
 			}
 	}
+
+
 }

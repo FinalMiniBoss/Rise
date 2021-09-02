@@ -2,10 +2,9 @@
 
 int main(int argc, char* args[])
 	{
-
-	//test window
+	srand(static_cast<unsigned int>(time(NULL)));
 	RenderWindow::Start();
-	SDL_SetWindowIcon(RenderWindow::window, IMG_Load("assets/Player.png"));
+	SDL_SetWindowIcon(RenderWindow::window, IMG_Load("assets/Icon.png"));
 	Scene* Game = new Scene;
 	RenderWindow::scene = Game;
 	while (RenderWindow::Update());

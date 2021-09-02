@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Water.h"
 #include "FuelGuage.h"
+#include "PowerUps.h"
 class Scene : public Drawable {
 public:
 	enum class State
@@ -26,6 +27,9 @@ public:
 	std::vector<Water*> water = {};
 	int platformTimer = 0;
 	int platformCounter = 1;
+
+	float powerUpFrequency = 10.f;
+	void setup();
 
 	Scene();
 	~Scene();

@@ -11,8 +11,7 @@ Player::Player() {
 	Thrust = new Drawable;
 	Thrust->texture = SDL_CreateTextureFromSurface(RenderWindow::renderer, IMG_Load("assets/Thrust.png"));
 	Thrust->size = { 100,100 };
-	Thrust->anchorPoint = { 0.f,0.f };
-	addChild(Thrust);
+	Thrust->anchorPoint = { 0.5f,0.5f };
 }
 
 void Player::onUpdate() {
@@ -73,10 +72,10 @@ void Player::onUpdate() {
 		state = State::Falling;
 		std::cout << "Now Falling" << std::endl;
 	}
-	if (state == State::Falling) {
-		for (auto& i : parent->children)
+	for (auto& i : parent->children)
 		{
-			SDL_Rect intersection = { 0,0,0,0 };
+		SDL_Rect intersection = { 0,0,0,0 };
+		if (state == State::Falling) {
 			if (dynamic_cast<Platform*>(i))
 			{
 				Platform* platform = dynamic_cast<Platform*>(i);
@@ -94,7 +93,44 @@ void Player::onUpdate() {
 				}
 			}
 		}
+		if (dynamic_cast<PowerUp*>(i))
+		{
+			PowerUp* powerup = dynamic_cast<PowerUp*>(i);
+			const SDL_Rect a = {
+				globalRect().x + 25,
+				globalRect().y,
+				50,
+				globalRect().h / 2 };
+			const SDL_Rect b = powerup->globalRect();
+			if (SDL_IntersectRect(&a, &b, &intersection) && powerup->alpha != 0.f)
+			{
+				switch (powerup->powerup) {
+				case PowerUp::Powerup::Fuel:
+					maxFuel *= 1.1f;
+					std::cout << "   Got Fuel PowerUp " << std::endl;
+					break;
+				case PowerUp::Powerup::InstantFuel:
+					fuel = maxFuel;
+					std::cout << "   Got InstantFuel PowerUp " << std::endl;
+					break;
+				case PowerUp::Powerup::Refuel:
+					refuelRate *= 1.1f;
+					std::cout << "   Got Refuel PowerUp " << std::endl;
+					break;
+				case PowerUp::Powerup::Speed:
+					dynamic_cast<Scene*>(parent)->speed/=1.5f;
+					std::cout << "   Got Speed PowerUp " << std::endl;
+					break;
+				case PowerUp::Powerup::Thrust:
+					accel *= 1.1f;
+					std::cout << "   Got Thrust PowerUp " << std::endl;
+					break;
+				}
+				powerup->alpha = 0.f;
+			}
+		}
 	}
+	
 	if (state == State::Grounded)
 	{
 		xVel = 0;
@@ -102,7 +138,7 @@ void Player::onUpdate() {
 	}
 	position.x += xVel;
 	position.y += yVel;
-	yVel += .00005f;
+	yVel += accel/3.f;
 
 	Thrust->scale = { std::fmax(0.f,Thrust->scale.x - 0.1f), std::fmax(0.f,Thrust->scale.y - 0.1f) };
 }
