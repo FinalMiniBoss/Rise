@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\assets">
+      <UniqueIdentifier>{c104317c-09df-4868-8ed8-e5ee2161e4df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -87,6 +90,69 @@
     </Image>
     <Image Include="..\x64\Release\bin\assets\Rise.ico">
       <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\BackTank.png">
+      <Filter>Resource Files\assets</Filter>
+    </Image>
+    <Image Include="assets\BigPlatform.png">
+      <Filter>Resource Files\assets</Filter>
+    </Image>
+    <Image Include="assets\Fuel.png">
+      <Filter>Resource Files\assets</Filter>
+    </Image>
+    <Image Include="assets\FuelPowerUp.png">
+      <Filter>Resource Files\assets</Filter>
+    </Image>
+    <Image Include="assets\FuelTank.png">
+      <Filter>Resource Files\assets</Filter>
+    </Image>
+    <Image Include="assets\GameOver.png">
+      <Filter>Resource Files\assets</Filter>
+    </Image>
+    <Image Include="assets\Icon.png">
+      <Filter>Resource Files\assets</Filter>
+    </Image>
+    <Image Include="assets\InstantFuelPowerUp.png">
+      <Filter>Resource Files\assets</Filter>
+    </Image>
+    <Image Include="assets\Pause.png">
+      <Filter>Resource Files\assets</Filter>
+    </Image>
+    <Image Include="assets\Platform.png">
+      <Filter>Resource Files\assets</Filter>
+    </Image>
+    <Image Include="assets\Player.png">
+      <Filter>Resource Files\assets</Filter>
+    </Image>
+    <Image Include="assets\Powerups.png">
+      <Filter>Resource Files\assets</Filter>
+    </Image>
+    <Image Include="assets\RefuelPowerUp.png">
+      <Filter>Resource Files\assets</Filter>
+    </Image>
+    <Image Include="assets\Restart.png">
+      <Filter>Resource Files\assets</Filter>
+    </Image>
+    <Image Include="assets\Sparks.png">
+      <Filter>Resource Files\assets</Filter>
+    </Image>
+    <Image Include="assets\SpeedPowerUp.png">
+      <Filter>Resource Files\assets</Filter>
+    </Image>
+    <Image Include="assets\Thrust.png">
+      <Filter>Resource Files\assets</Filter>
+    </Image>
+    <Image Include="assets\ThrustPowerUp.png">
+      <Filter>Resource Files\assets</Filter>
+    </Image>
+    <Image Include="assets\Title.png">
+      <Filter>Resource Files\assets</Filter>
+    </Image>
+    <Image Include="assets\Tutorial.png">
+      <Filter>Resource Files\assets</Filter>
+    </Image>
+    <Image Include="assets\Wave.png">
+      <Filter>Resource Files\assets</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

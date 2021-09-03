@@ -13,7 +13,7 @@ public:
         Flying,
         Falling,
         Dead
-    } state = State::Grounded; 
+    } state = State::Falling; 
 
     Drawable* Thrust = nullptr;
 
@@ -26,6 +26,8 @@ public:
     float refuelRate = 0.5f;
 
     Player();
+
+    void setup();
 
     void onUpdate();
 };

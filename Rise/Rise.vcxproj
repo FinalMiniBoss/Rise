@@ -82,7 +82,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>C:\Dev\include;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\bin\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\bin\</IntDir>
     <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
@@ -139,6 +139,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>C:\Dev\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -180,10 +181,31 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\x64\Release\bin\assets\Rise.ico" />
+    <Image Include="assets\BackTank.png" />
+    <Image Include="assets\BigPlatform.png" />
+    <Image Include="assets\Fuel.png" />
+    <Image Include="assets\FuelPowerUp.png" />
+    <Image Include="assets\FuelTank.png" />
+    <Image Include="assets\GameOver.png" />
+    <Image Include="assets\Icon.png" />
+    <Image Include="assets\InstantFuelPowerUp.png" />
+    <Image Include="assets\Pause.png" />
+    <Image Include="assets\Platform.png" />
+    <Image Include="assets\Player.png" />
+    <Image Include="assets\Powerups.png" />
+    <Image Include="assets\RefuelPowerUp.png" />
+    <Image Include="assets\Restart.png" />
     <Image Include="assets\Rise.ico">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
     </Image>
+    <Image Include="assets\Sparks.png" />
+    <Image Include="assets\SpeedPowerUp.png" />
+    <Image Include="assets\Thrust.png" />
+    <Image Include="assets\ThrustPowerUp.png" />
+    <Image Include="assets\Title.png" />
+    <Image Include="assets\Tutorial.png" />
+    <Image Include="assets\Wave.png" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Rise.rc" />

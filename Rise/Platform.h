@@ -7,6 +7,7 @@ class Platform :
 {
 public:
     inline static SDL_Texture* PlatformTexture = nullptr;
+    inline static SDL_Texture* BigPlatformTexture = nullptr;
     Platform();
     ~Platform();
     virtual void onUpdate();

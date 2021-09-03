@@ -20,7 +20,15 @@ public:
 
 	Drawable* Title = nullptr;
 	Drawable* Tutorial = nullptr;
+	Drawable* Sparks = nullptr;
+	Drawable* GameOver = nullptr;
+	Drawable* Restart = nullptr;
+	Drawable* Pause = nullptr;
+	Drawable* Powerups = nullptr;
+
 	int ticker = 0;
+	float score = 0.f;
+
 	float speed = 0.0005f;
 	Player* player = nullptr;
 	FuelGuage* fuelGuage = nullptr;
